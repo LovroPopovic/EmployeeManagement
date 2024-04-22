@@ -35,14 +35,29 @@ Follow these steps to get your development environment set up:
    ```bash
    dotnet restore
    ```
+   
+4. **Installing EntityFramework tools**
+5. 
+   ```bash
+   dotnet tool install --global dotnet-ef
+   ```
+   
+6. **Initializing of sqlite and migrating models to db**
+7. 
+   ```bash
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
 
-4. **Build the project**
+   
+
+8. **Build the project**
 
    ```bash
    dotnet build
    ```
 
-5. **Run the project**
+9. **Run the project**
    ```bash
    dotnet run
    ```
