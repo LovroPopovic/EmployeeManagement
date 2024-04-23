@@ -1,76 +1,71 @@
+```
 # Employee Management System
 
-This project is developed using the latest version of .NET and Entity Framework Core, designed to manage employee data for a company. It currently supports basic CRUD operations for managing employee details.
+Developed using .NET 8.0.204 and ASP.NET Core 8.0.4, this project efficiently manages employee data for companies. It includes basic CRUD operations to handle employee details.
 
 ## Getting Started
 
-These instructions will help you get a copy of the project up and running on your local machine for development and testing purposes.
+Follow these instructions to set up and run the project on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-To run this project, you will need:
+Ensure you have the following installed:
 
-- .NET SDK (Check the version used in your project)
-- Visual Studio Code or another compatible IDE
+- .NET SDK 8.0.204
+- ASP.NET Core Runtime 8.0.4
+- Visual Studio Code or another IDE that supports .NET
 - Git
 
-### Installing
+### Installation
 
-Follow these steps to get your development environment set up:
+Execute the following steps to prepare your development environment:
 
 1. **Clone the repository**
-
    ```bash
    git clone https://github.com/LovroPopovic/EmployeeManagement.git
    ```
 
 2. **Navigate to the project directory**
-
    ```bash
    cd EmployeeManagement
    ```
 
-3. **Restore dependencies**
-
+3. **Restore project dependencies**
    ```bash
    dotnet restore
    ```
-   
-4. **Installing EntityFramework tools**
-5. 
+
+4. **Install Entity Framework tools**
    ```bash
    dotnet tool install --global dotnet-ef
    ```
-   
-6. **Initializing of sqlite and migrating models to db**
-7. 
+
+5. **Initialize SQLite and apply database migrations**
    ```bash
    dotnet ef migrations add InitialCreate
    dotnet ef database update
    ```
 
-   
-
-8. **Build the project**
-
+6. **Build the project**
    ```bash
    dotnet build
    ```
 
-9. **Run the project**
+7. **Run the project**
    ```bash
    dotnet run
    ```
-   This command runs the application. By default, the API will be available at `http://localhost:5000`.
+   Access the application at `http://localhost:5000`.
 
-### Using the API (Upcoming Features)
+### Using the API
 
-Currently, the API endpoints for creating, retrieving, updating, and deleting employees are planned but not yet implemented. This section will be updated as development progresses.
+The API endpoints to create, retrieve, update, and delete employee records are under development. Details will be provided as updates are made.
 
 ## Authors
 
-- **Lovro Popovic** - _Initial work_ - [Github](https://github.com/LovroPopovic)
+- **Lovro Popovic** - Initial development - [GitHub](https://github.com/LovroPopovic)
 
 ## License
 
-This project is open source and available under the MIT License.
+This software is released under the MIT License.
+```
