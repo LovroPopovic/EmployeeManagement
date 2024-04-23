@@ -1,12 +1,24 @@
-using Microsoft.EntityFrameworkCore; 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization; // Add this namespace
 
-namespace EmployeeManagement.Models 
+namespace EmployeeManagement.Models
 {
     public class Employee
     {
-          public int Id { get; set; }
-          public string? Name { get; set; }
-          public string? LastName { get; set; }
-         
+         [Required]
+        public int Id { get; set; }
+        
+        [Required]
+        public string? Name { get; set; }
+        
+        [Required]
+        public string? LastName { get; set; }
+        
+        public DateTime LastUpdateDate { get; set; }
+
+        [JsonIgnore] 
+        public DateTime CreationDate { get; set; }
     }
 }

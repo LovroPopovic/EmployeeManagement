@@ -41,8 +41,8 @@ namespace EmployeeManagement.Controllers
             return employee;
         }
 
+        
         // PUT: api/Employees/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
@@ -51,7 +51,16 @@ namespace EmployeeManagement.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            var existingEmployee = await _context.Employees.FindAsync(id);
+            if (existingEmployee == null)
+            {
+                return NotFound();
+            }
+
+            // Exclude CreationDate from being updated
+            employee.CreationDate = existingEmployee.CreationDate;
+
+            _context.Entry(existingEmployee).CurrentValues.SetValues(employee);
 
             try
             {
@@ -72,17 +81,23 @@ namespace EmployeeManagement.Controllers
             return NoContent();
         }
 
+
+
+
+
         // POST: api/Employees
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
+            employee.CreationDate = DateTime.Now;
+
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
-            
-            return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, employee);
+            return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, new { employee.Id, employee.Name, employee.LastName, employee.LastUpdateDate });
         }
+
+
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
@@ -99,6 +114,8 @@ namespace EmployeeManagement.Controllers
 
             return NoContent();
         }
+
+
 
         private bool EmployeeExists(int id)
         {
