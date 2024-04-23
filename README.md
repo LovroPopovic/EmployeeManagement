@@ -1,4 +1,4 @@
-```
+
 # Employee Management System
 
 Developed using .NET 8.0.204 and ASP.NET Core 8.0.4, this project efficiently manages employee data for companies. It includes basic CRUD operations to handle employee details.
