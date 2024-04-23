@@ -57,8 +57,8 @@ namespace EmployeeManagement.Controllers
                 return NotFound();
             }
 
-            // Exclude CreationDate from being updated
             employee.CreationDate = existingEmployee.CreationDate;
+            employee.LastUpdateDate = DateTime.Now;
 
             _context.Entry(existingEmployee).CurrentValues.SetValues(employee);
 
@@ -90,6 +90,7 @@ namespace EmployeeManagement.Controllers
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
             employee.CreationDate = DateTime.Now;
+            employee.LastUpdateDate = DateTime.Now; 
 
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
