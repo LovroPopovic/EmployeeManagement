@@ -1,11 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization; 
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace EmployeeManagement.Models
 {
     public class Employee
     {
-        [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Required]
