@@ -1,4 +1,4 @@
-````
+
 # Employee Management System
 
 Developed using .NET 8.0.204 and ASP.NET Core 8.0.4, this project efficiently manages employee data for companies. It includes basic CRUD operations to handle employee details, as well as time tracking functionality.
@@ -24,7 +24,7 @@ Execute the following steps to prepare your development environment:
 1. **Clone the repository**
    ```bash
    git clone https://github.com/LovroPopovic/EmployeeManagement.git
-````
+   ```
 
 2. **Navigate to the project directory**
 
@@ -97,6 +97,4 @@ The API endpoints for time tracking are as follows:
 
 This software is released under the MIT License.
 
-```
 
-```
