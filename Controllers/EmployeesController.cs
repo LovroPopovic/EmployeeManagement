@@ -42,9 +42,9 @@ namespace EmployeeManagement.Controllers
         }
 
         
-        // PUT: api/Employees/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        // PATCH: api/Employees/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchEmployee(int id, Employee employee)
         {
             if (id != employee.Id)
             {
@@ -57,8 +57,9 @@ namespace EmployeeManagement.Controllers
                 return NotFound();
             }
 
-            employee.CreationDate = existingEmployee.CreationDate;
-            employee.LastUpdateDate = DateTime.Now;
+            var time_hr = new DateTimeOffset(DateTime.Now, new TimeSpan(2, 0, 0));
+            employee.CreationDate = existingEmployee.CreationDate; 
+            employee.LastUpdateDate = time_hr;
 
             _context.Entry(existingEmployee).CurrentValues.SetValues(employee);
 
@@ -89,14 +90,16 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            employee.CreationDate = DateTime.Now;
-            employee.LastUpdateDate = DateTime.Now; 
+            var time_hr = new DateTimeOffset(DateTime.Now, new TimeSpan(2, 0, 0));
+            employee.CreationDate = time_hr;
+            employee.LastUpdateDate = time_hr;
 
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, new { employee.Id, employee.Name, employee.LastName, employee.LastUpdateDate });
+            return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, employee);
         }
+
 
 
 

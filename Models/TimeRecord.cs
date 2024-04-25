@@ -6,8 +6,11 @@ namespace EmployeeManagement.Models
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
         public Employee? Employee { get; set; }
+        public double Hours { get; set; }
+        public string? Date { get; set; }
+
     }
 }

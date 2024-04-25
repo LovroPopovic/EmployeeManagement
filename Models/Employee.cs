@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization; // Add this namespace
+using System.Text.Json.Serialization; 
 
 namespace EmployeeManagement.Models
 {
     public class Employee
     {
-         [Required]
+        [Required]
         public int Id { get; set; }
         
         [Required]
@@ -16,9 +14,9 @@ namespace EmployeeManagement.Models
         [Required]
         public string? LastName { get; set; }
         
-        public DateTime LastUpdateDate { get; set; }
+        public DateTimeOffset LastUpdateDate { get; set; }
 
-        [JsonIgnore] 
-        public DateTime CreationDate { get; set; }
+        [JsonIgnore]
+        public DateTimeOffset CreationDate { get; set; }
     }
 }
