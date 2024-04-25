@@ -73,21 +73,71 @@ Execute the following steps to prepare your development environment:
    ```
    Access the application at `http://localhost:5000`.
    Access Swagger at `http://localhost:5000/swagger`
+### Detailed API Endpoints
 
-### Using the API
+#### Employee Endpoints
 
-The API endpoints for managing employee records are as follows:
+- **GET /api/employees**
+  - Retrieves a list of all employees.
+  - **Response**: Array of employee objects.
 
-- **GET /api/employees**: Retrieve all employees.
-- **GET /api/employees/{id}**: Retrieve a specific employee by ID.
-- **POST /api/employees**: Create a new employee.
-- **PUT /api/employees/{id}**: Update an existing employee.
-- **DELETE /api/employees/{id}**: Delete an employee by ID.
+- **GET /api/employees/{id}**
+  - Retrieves a specific employee by their unique ID.
+  - **Parameters**:
+    - `id`: The ID of the employee.
+  - **Response**: Employee object or 404 error if not found.
 
-The API endpoints for time tracking are as follows:
+- **POST /api/employees**
+  - Creates a new employee.
+  - **Request Body**: Employee object (excluding ID, which is auto-generated).
+  - **Response**: Returns the created employee object along with a URI in the `Location` header pointing to the newly created employee.
 
-- **POST /api/timerecords/start/{employeeId}**: Start time tracking for the specified employee.
-- **PUT /api/timerecords/stop/{id}**: Stop time tracking for the specified time record.
+- **PATCH /api/employees/{id}**
+  - Partially updates an existing employee.
+  - **Parameters**:
+    - `id`: The ID of the employee to update.
+  - **Request Body**: Fields within the employee object that should be updated.
+  - **Response**: 204 No Content on success, or 404 if the employee does not exist.
+
+- **DELETE /api/employees/{id}**
+  - Deletes an employee by ID.
+  - **Parameters**:
+    - `id`: The ID of the employee to delete.
+  - **Response**: 204 No Content on success, or 404 if the employee does not exist.
+
+#### Time Record Endpoints
+
+- **GET /api/TimeRecords/{id}**
+  - Retrieves a specific time record by its ID.
+  - **Parameters**:
+    - `id`: The ID of the time record.
+  - **Response**: Time record object or 404 error if not found.
+
+- **POST /api/TimeRecords/start**
+  - Starts time tracking for an employee.
+  - **Request Body**: Contains the `employeeId`.
+  - **Response**: Returns the started time record object, or 404 if the employee is not found.
+
+- **PUT /api/TimeRecords/stop/{id}**
+  - Stops time tracking for an active time record.
+  - **Parameters**:
+    - `id`: The ID of the time record to stop.
+  - **Response**: 204 No Content on successful stop, or 404 if no active record is found.
+
+- **GET /api/TimeRecords/employee/{employeeId}/from/{startDate}/to/{endDate}**
+  - Retrieves working hours for a specific employee between specified dates.
+  - **Parameters**:
+    - `employeeId`: The ID of the employee.
+    - `startDate`: Start date for the record query.
+    - `endDate`: End date for the record query.
+  - **Response**: Dictionary of total hours worked each day, or 404 if no records are found.
+
+- **GET /api/TimeRecords/all/from/{startDate}/to/{endDate}**
+  - Retrieves time records for all employees between specified dates.
+  - **Parameters**:
+    - `startDate`: Start date for the record query.
+    - `endDate`: End date for the record query.
+  - **Response**: List of time records, ordered by the hours worked in descending order.
 
 ## Authors
 
