@@ -30,6 +30,10 @@ namespace EmployeeManagement.Controllers
             return Ok(timeRecord);
         }
 
+
+
+
+
         [HttpPost("start")]
         public async Task<ActionResult<TimeRecord>> StartTimeTracking( int employeeId)
         {
@@ -59,6 +63,12 @@ namespace EmployeeManagement.Controllers
             return CreatedAtRoute("GetTimeRecordById", new { id = timeRecord.Id }, timeRecord);
         }
 
+
+
+
+
+
+
         [HttpPut("stop")]
         public async Task<IActionResult> EndTimeTracking(int employeeId)
         {
@@ -82,6 +92,12 @@ namespace EmployeeManagement.Controllers
 
             return NoContent();
         }
+
+
+
+
+
+
 
         [HttpGet("employee/{employeeId}/from/{startDate}/to/{endDate}")]
         public async Task<ActionResult<List<object>>> GetWorkingHoursForEmployee(int employeeId, DateTime startDate, DateTime endDate)
@@ -127,6 +143,10 @@ namespace EmployeeManagement.Controllers
 
             return Ok(reportData);
         }
+
+
+
+        
 
 
 

@@ -17,7 +17,6 @@ namespace EmployeeManagement.Models
     [Required]
     public DateTimeOffset StartTime { get; set; }
 
-    // Allow null for EndTime
     public DateTimeOffset? EndTime { get; set; } 
 
     [JsonIgnore]
