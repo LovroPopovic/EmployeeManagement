@@ -83,9 +83,8 @@ namespace EmployeeManagement.Controllers
             return NoContent();
         }
 
-        // GET: api/TimeRecords/employee/{employeeId}/from/{startDate}/to/{endDate}
         [HttpGet("employee/{employeeId}/from/{startDate}/to/{endDate}")]
-        public async Task<ActionResult<Dictionary<int, double>>> GetWorkingHoursForEmployee(int employeeId, DateTime startDate, DateTime endDate)
+        public async Task<ActionResult<List<object>>> GetWorkingHoursForEmployee(int employeeId, DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
@@ -94,26 +93,45 @@ namespace EmployeeManagement.Controllers
 
             var timeRecords = await _context.TimeRecords.ToListAsync();
 
-            var employeeHours = timeRecords.Where(tr => tr.EmployeeId == employeeId && 
-                                                        tr.StartTime.Date >= startDate.Date && 
-                                                        tr.StartTime.Date <= endDate.Date)
-                                        .GroupBy(tr => tr.EmployeeId)
-                                        .Select(group => new { EmployeeId = group.Key, TotalHours = group.Sum(t => t.Hours) })
-                                        .ToDictionary(x => x.EmployeeId, x => x.TotalHours);
+            // Get employee name
+            var employeeName = await _context.Employees.Where(e => e.Id == employeeId)
+                                            .Select(e => e.Name + " " + e.LastName)
+                                            .FirstOrDefaultAsync();
 
-            if (!employeeHours.Any())
+            if (employeeName == null)
+            {
+                return NotFound("Employee not found.");
+            }
+
+            var filteredRecords = timeRecords.Where(tr => tr.EmployeeId == employeeId && 
+                                                            tr.StartTime.Date >= startDate.Date && 
+                                                            tr.StartTime.Date <= endDate.Date)
+                                                .Select(tr => new
+                                                {
+                                                    StartTime = tr.StartTime,
+                                                    EndTime = tr.EndTime,
+                                                    Hours = tr.Hours
+                                                })
+                                                .ToList();
+
+            if (!filteredRecords.Any())
             {
                 return NotFound("No time records found for the specified employee and date range.");
             }
 
-            return Ok(employeeHours);
+            var reportData = new List<object>()
+            {
+                new { EmployeeName = employeeName, TotalHours = filteredRecords.Sum(x => x.Hours) }
+            };
+            reportData.AddRange(filteredRecords);
+
+            return Ok(reportData);
         }
 
 
 
-        // GET: api/TimeRecords/all/from/{startDate}/to/{endDate}
         [HttpGet("all/from/{startDate}/to/{endDate}")]
-        public async Task<ActionResult<IEnumerable<TimeRecord>>> GetWorkingHoursForAllEmployees(DateTime startDate, DateTime endDate)
+        public async Task<ActionResult<List<object>>> GetWorkingHoursForAllEmployeesByDateRange(DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
@@ -122,17 +140,34 @@ namespace EmployeeManagement.Controllers
 
             var timeRecords = await _context.TimeRecords.ToListAsync();
 
-            var filteredRecords = timeRecords.Where(tr => tr.StartTime.Date >= startDate.Date && 
-                                                        tr.StartTime.Date <= endDate.Date)
-                                            .OrderByDescending(tr => tr.Hours);
+            var employeeReports = timeRecords.Where(tr => tr.StartTime.Date >= startDate.Date && 
+                                                            tr.StartTime.Date <= endDate.Date)
+                                            .GroupBy(tr => tr.EmployeeId)
+                                            .Select(group => new
+                                            {
+                                                EmployeeId = group.Key,
+                                                EmployeeName = _context.Employees.Where(e => e.Id == group.Key)
+                                                                                .Select(e => e.Name + " " + e.LastName)
+                                                                                .FirstOrDefault(),
+                                                TotalHours = group.Sum(x => x.Hours),
+                                                TimeRecords = group.Select(tr => new
+                                                {
+                                                    StartTime = tr.StartTime,
+                                                    EndTime = tr.EndTime,
+                                                    Hours = tr.Hours
+                                                })
+                                            })
+                                            .OrderByDescending(x => x.TotalHours)
+                                            .ToList();
 
-            if (!filteredRecords.Any())
+            if (!employeeReports.Any())
             {
                 return NotFound("No time records found for the specified date range.");
             }
 
-            return Ok(filteredRecords);
+            return Ok(employeeReports);
         }
+
 
     }
 }
