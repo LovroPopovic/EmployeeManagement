@@ -113,12 +113,12 @@ Execute the following steps to prepare your development environment:
   - `id` (required): Unique identifier of the time record.
 - **Response**: Returns a time record object or 404 error if the record is not found.
 
-#### `POST /api/TimeRecords/start`
+#### `POST /api/TimeRecords/employee/{employeeId}/start`
 - **Description**: Starts time tracking for an employee.
 - **Request Body**: Contains the `employeeId` indicating the employee to track.
 - **Response**: Returns the started time record object, or 404 if the employee does not exist.
 
-#### `PUT /api/TimeRecords/stop/{id}`
+#### `POST /api/TimeRecords/employee/{employeeId}/stop`
 - **Description**: Stops time tracking for an active time record.
 - **Parameters**:
   - `id` (required): Unique identifier of the time record to stop.
