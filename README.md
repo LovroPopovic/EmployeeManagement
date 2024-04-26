@@ -130,14 +130,14 @@ Execute the following steps to prepare your development environment:
   - `employeeId` (required): ID of the employee.
   - `startDate` (required): Start date for the record query.
   - `endDate` (required): End date for the record query.
-- **Response**: Returns a dictionary of total hours worked each day, or 404 if no records are found.
+- **Response**: Returns a dictionary of total hours worked in that range, and all records in that range, or 404 if no records are found.
 
 #### `GET /api/TimeRecords/all/from/{startDate}/to/{endDate}`
 - **Description**: Retrieves time records for all employees between specified dates.
 - **Parameters**:
   - `startDate` (required): Start date for the record query.
   - `endDate` (required): End date for the record query.
-- **Response**: Returns a list of time records, ordered by the hours worked in descending order.
+- **Response**: Returns a list of time records, ordered by the total hours employee worked in descending order.
 
 
 ## Authors
