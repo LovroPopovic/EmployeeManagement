@@ -34,7 +34,7 @@ namespace EmployeeManagement.Controllers
 
 
 
-        [HttpPost("start")]
+        [HttpPost("employee/{employeeId}/start")]
         public async Task<ActionResult<TimeRecord>> StartTimeTracking( int employeeId)
         {
             var employeeExists = await _context.Employees.AnyAsync(e => e.Id == employeeId);
@@ -69,7 +69,7 @@ namespace EmployeeManagement.Controllers
 
 
 
-        [HttpPut("stop")]
+        [HttpPost("employee/{employeeId}/stop")]
         public async Task<IActionResult> EndTimeTracking(int employeeId)
         {
             var activeTimeRecord = await _context.TimeRecords.FirstOrDefaultAsync(tr => tr.EmployeeId == employeeId && tr.EndTime == null);
