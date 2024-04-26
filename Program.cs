@@ -6,8 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Configure SQL Server database context
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? 
-                       "Server=localhost;Database=MyDatabase;User Id=sa;Password=yourPassword;";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<EmployeeContext>(options =>
     options.UseSqlServer(connectionString));
 
