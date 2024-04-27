@@ -2,6 +2,10 @@
 
 Developed using .NET 8.0.204 and ASP.NET Core 8.0.4, this project efficiently manages employee data for companies. It includes basic CRUD operations to handle employee details, as well as time tracking functionality.
 
+## Overview
+
+The Employee Management System is designed to simplify the management of employee records and their working hours for companies. It supports CRUD operations for managing employee data and includes functionality for tracking employee working hours. This system is intended for use in administrative and HR departments to help streamline employee management tasks.
+
 ## Getting Started
 
 Follow these instructions to set up and run the project on your local machine for development and testing purposes.
