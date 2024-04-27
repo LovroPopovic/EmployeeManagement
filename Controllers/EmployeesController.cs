@@ -42,9 +42,9 @@ namespace EmployeeManagement.Controllers
         }
 
         
-        // PATCH: api/Employees/5
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchEmployee(int id, Employee employee)
+        // Put: api/Employees/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
             if (id != employee.Id)
             {
@@ -57,9 +57,9 @@ namespace EmployeeManagement.Controllers
                 return NotFound();
             }
 
-            var time_hr = new DateTimeOffset(DateTime.Now, new TimeSpan(2, 0, 0));
+            
             employee.CreationDate = existingEmployee.CreationDate; 
-            employee.LastUpdateDate = time_hr;
+            employee.LastUpdateDate = DateTimeOffset.Now;
 
             _context.Entry(existingEmployee).CurrentValues.SetValues(employee);
 
@@ -90,9 +90,9 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            var time_hr = new DateTimeOffset(DateTime.Now, new TimeSpan(2, 0, 0));
-            employee.CreationDate = time_hr;
-            employee.LastUpdateDate = time_hr;
+            
+            employee.CreationDate = DateTimeOffset.Now;
+            employee.LastUpdateDate = DateTimeOffset.Now;
 
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
@@ -127,7 +127,7 @@ namespace EmployeeManagement.Controllers
         }
 
 
-                [HttpPost("{employeeId}/start")]
+        [HttpPost("{employeeId}/start")]
         public async Task<ActionResult<TimeRecord>> StartTimeTracking( int employeeId)
         {
             var employeeExists = await _context.Employees.AnyAsync(e => e.Id == employeeId);
@@ -142,11 +142,11 @@ namespace EmployeeManagement.Controllers
             {
                 return BadRequest($"Time tracking is already active for employee with ID {employeeId}");
             }
-            var time_hr = new DateTimeOffset(DateTime.Now, new TimeSpan(2, 0, 0));
+
             var timeRecord = new TimeRecord
             {
                 EmployeeId = employeeId,
-                StartTime = time_hr,
+                StartTime = DateTimeOffset.Now,
                 EndTime = null
             };
 

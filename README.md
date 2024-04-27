@@ -96,9 +96,9 @@ Execute the following steps to prepare your development environment:
 - **Request Body**: JSON representation of the employee object, excluding the ID (auto-generated).
 - **Response**: Returns the created employee object with a `Location` header containing the URI of the new resource.
 
-#### `PATCH /api/employees/{id}`
+#### `PUT /api/employees/{id}`
 
-- **Description**: Partially updates an existing employee's details.
+- **Description**: updates an existing employee's details.
 - **Parameters**:
   - `id` (required): Unique identifier of the employee to update.
 - **Request Body**: JSON representation of fields within the employee object that need updating.
